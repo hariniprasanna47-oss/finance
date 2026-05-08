@@ -60,8 +60,11 @@ prices.to_csv("../data/cleaned_nifty50_1y.csv")
 
 #returns
 returns = prices.pct_change()
-cumulative_returns = returns.sum()
-
+#growth factor (1 + returns) #then cumulative multiplication
+cumulative_returns = (1 + returns).cumprod().iloc[-1].to_frame("cumulative_returns")
+cumulative_returns = cumulative_returns.reset_index(names='ticker')
+print("Cumulative returns calculation done.")
+cumulative_returns.to_csv("../data/cumulative_returns.csv",index=False)
 
 #What to do if that fails
 #2. Add lookback window as parameter
